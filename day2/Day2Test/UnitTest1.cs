@@ -1,3 +1,4 @@
+using Day2Code;
 using NUnit.Framework;
 
 namespace Day2Test {

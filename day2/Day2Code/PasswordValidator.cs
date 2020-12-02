@@ -37,13 +37,24 @@ namespace Day2Code {
 		}
 	}
 
+	public class Part2Policy : Policy {
+		public Part2Policy(string input) : base(input) { }
+
+		public override bool IsValid() {
+			var firstLetter = this.Password[this.Digit1 - 1];
+			var secondLetter = this.Password[this.Digit2 - 1];
+			return (
+				firstLetter == this.Letter
+				^
+				secondLetter == this.Letter
+			);
+		}
+	}
+
 	public class PasswordValidator {
 
-		//[TestCase("1 - 3 a: abcde")]
-		//[TestCase("2 - 9 c: ccccccccc")]
-
 		public bool IsValid(string input) {
-			var p = new Part1Policy(input);
+			var p = new Part2Policy(input);
 			return p.IsValid();
 		}
 	}

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Day3Code {
 	public class Vector {
@@ -13,23 +16,21 @@ namespace Day3Code {
 	}
 
 	public class Mountain {
-		public int[][] Cells { get; set;  }
+		private readonly IEnumerable<string> lines;
 
-		public Mountain(string[] input) {
-			this.Cells = input
-				.Select(line => line.Select(c => c == '#' ? 1 : 0).ToArray()).ToArray();
+		public Mountain(string filename) {
+			this.lines = File.ReadLines(filename);
 		}
 
-		private int Height => this.Cells.Length;
-		private int MapWidth => this.Cells[0].Length;
-
-
 		public int CountTrees(Vector v) {
-			var treeCount = 0;
 			var x = 0;
-			for (var y = 0; y < this.Height; y+= v.Y) {
-				treeCount += this.Cells[y][x];
-				x = (x + v.X) % this.MapWidth;
+			var y = 0;
+			var treeCount = 0;
+			foreach (var line in lines) {
+				if (y++ % v.Y != 0) continue;
+				var isTree = line[x] == '#';
+				if (isTree) treeCount++;
+				x = (x + v.X) % line.Length;
 			}
 			return (treeCount);
 		}

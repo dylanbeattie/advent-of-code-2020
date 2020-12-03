@@ -2,6 +2,16 @@
 using System.Linq;
 
 namespace Day3Code {
+	public class Vector {
+		public Vector(int x, int y) {
+			this.X = x;
+			this.Y = y;
+		}
+
+		public int X { get; set; }
+		public int Y { get; set; }
+	}
+
 	public class Mountain {
 		public int[][] Cells { get; set;  }
 
@@ -14,12 +24,12 @@ namespace Day3Code {
 		private int MapWidth => this.Cells[0].Length;
 
 
-		public int CountTrees(int dx, int dy) {
+		public int CountTrees(Vector v) {
 			var treeCount = 0;
 			var x = 0;
-			for (var y = 0; y < this.Height; y+= dy) {
+			for (var y = 0; y < this.Height; y+= v.Y) {
 				treeCount += this.Cells[y][x];
-				x = (x + dx) % this.MapWidth;
+				x = (x + v.X) % this.MapWidth;
 			}
 			return (treeCount);
 		}

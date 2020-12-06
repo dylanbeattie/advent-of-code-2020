@@ -5,9 +5,21 @@ using System.Runtime.ExceptionServices;
 
 namespace Day5Code {
 	class Program {
+		
 		static void Main(string[] args) {
 			var boardingPassCodes = File.ReadAllLines("input.txt");
 			var seatIds = boardingPassCodes.Select(code => new Seat(code).SeatId).ToList();
+			var minSeatId = seatIds.Min();
+			var maxSeatId = seatIds.Max();
+
+			// Approach using difference of sums of two sequences
+			var sumOfAllPossibleSeatIds = Enumerable.Range(minSeatId, 1 + maxSeatId - minSeatId).Sum();
+			var sumOfActualSeatIds = seatIds.Sum();
+			var difference = sumOfAllPossibleSeatIds - sumOfActualSeatIds;
+			Console.WriteLine(difference);
+			
+			// Using LINQ to find element that satifies predicate -
+			// less optimal (not optimal? is it pessimal?)
 			Console.WriteLine(Enumerable.Range(0, 1023).Single(
 				id => seatIds.Contains(id + 1)
 				      && seatIds.Contains(id - 1)

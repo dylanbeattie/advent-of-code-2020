@@ -27,25 +27,56 @@ namespace Day7Code {
 			if (tokens[1] == "no other") return (ruleName, rules);
 			rules = tokens[1].Split(", ")
 				// Parse "6 faded blue" into { "faded blue", 6 }
-				.Select(colorRule => BagRule.FromToken(colorRule))
+				.Select(BagRule.FromToken)
 				.ToDictionary(bagRule => bagRule.Name, bagRule => bagRule.Count);
 			return (ruleName, rules);
 		}
 
-		public Dictionary<string, Dictionary<string, int>> BagRules;
+		private void UpdateMagicListThing() {
+			var parents = new Dictionary<string, List<string>>();
+			foreach (var thing in BagRules) {
+				foreach (var rule in thing.Value) {
+					if (!parents.ContainsKey(rule.Key)) parents[rule.Key] = new List<string>();
+					parents[rule.Key].Add(thing.Key);
+				}
+			}
+
+			this.MagicList = parents;
+		}
+
+		public Dictionary<string, List<string>> MagicList { get; set; }
+
+		public Dictionary<string, Dictionary<string, int>> BagRules { get; set; }
+	
 
 		public static Policy ParseRules(string rules) {
 			var policy = new Policy() {
 				BagRules = rules
-					.Split(Environment.NewLine)
-					.Select(rule => ParseRule(rule))
+					.Split('\n', StringSplitOptions.RemoveEmptyEntries)
+					.Select(line => line.Trim())
+					.Select(ParseRule)
 					.ToDictionary(t => t.Name, t => t.Rules)
 			};
+			policy.UpdateMagicListThing();
 			return policy;
 		}
 
-		public int CheckBag(string bag) {
-			return 0;
+		public int CountChildBags(string bag) {
+			if (this.BagRules[bag].Count == 0) return 0;
+			var rootRule = this.BagRules[bag];
+			return rootRule.Sum(rule => rule.Value + (rule.Value * CountChildBags(rule.Key)));
+		}
+
+		public int CountRootBags(string bag) {
+			var possibleRootBags = CheckBag(bag).ToList();
+			return possibleRootBags.Distinct().ToList().Count;
+		}
+
+		public IEnumerable<string> CheckBag(string bag) {
+			if (!MagicList.ContainsKey(bag)) return new List<string>();
+			var directParents = MagicList[bag];
+			var ancestors = directParents.SelectMany(CheckBag);
+			return directParents.Concat(ancestors);
 		}
 	}
 }

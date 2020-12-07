@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 
 namespace Day7Code {
@@ -13,15 +14,23 @@ vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
 faded blue bags contain no other bags.
 dotted black bags contain no other bags.";
 
+		private static string Part2TestInput = @"shiny gold bags contain 2 dark red bags.
+dark red bags contain 2 dark orange bags.
+dark orange bags contain 2 dark yellow bags.
+dark yellow bags contain 2 dark green bags.
+dark green bags contain 2 dark blue bags.
+dark blue bags contain 2 dark violet bags.
+dark violet bags contain no other bags.";
+
 		static void Main(string[] args) {
-			foreach (var line in TestInput.Split(Environment.NewLine)) {
-				var policy = Policy.ParseRule(line);
-			}
+			var policy = Policy.ParseRules(File.ReadAllText("input.txt"));
+			Console.WriteLine(policy.CountRootBags("shiny gold"));
+			 Console.WriteLine(policy.CountChildBags("shiny gold"));
 		}
 
-		public static int CountBags(string ourBag) {
-			return 4;
-		}
+		//public static int CountBags(string ourBag) {
+		//	return 4;
+		//}
 
 
 	}

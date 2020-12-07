@@ -6,8 +6,15 @@ using System.Threading;
 
 namespace Day6Code {
 	public class Program {
+
+
+		public static string HotPinkNewlines 
+			= "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+
+
 		static void Main(string[] args) {
-			Console.WriteLine(File.ReadAllText("input.txt").Replace("\r", "").Split("\n\n").Select(ParseCustomsDeclarationFormUsingPart2Rules).Sum());
+			Console.WriteLine(File.ReadAllText("input.txt").Replace("\r", "")
+				.Split("\n\n").Select(ParseCustomsDeclarationFormUsingPart2Rules).Sum());
 		}
 
 		public static int ParseCustomsDeclarationForm(string input) {

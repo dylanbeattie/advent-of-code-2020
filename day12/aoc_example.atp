@@ -1,0 +1,48 @@
+~pause 60~|cpm
+~pause 320~b:
+~pause 60~submit logo3
+~pause 600~
+~pause 60~to manhattan
+~pause 60~make "x item 1 tf
+~pause 60~make "y item 2 tf
+~pause 60~if (:x < 0) [ make "x -1 * :x ]
+~pause 60~if (:y < 0) [ make "y -1 * :y ]
+~pause 60~make "dist :x + :y
+~pause 60~pr :dist
+~pause 60~end
+~pause 60~
+~pause 60~to north :distance
+~pause 60~make "heading item 3 tf
+~pause 60~seth 0
+~pause 60~fd :distance
+~pause 60~seth :heading
+~pause 60~end
+~pause 60~
+~pause 60~to east :distance
+~pause 60~make "heading item 3 tf
+~pause 60~seth 90
+~pause 60~fd :distance
+~pause 60~seth :heading
+~pause 60~end
+~pause 60~
+~pause 60~to west :distance
+~pause 60~make "heading item 3 tf
+~pause 60~seth 270
+~pause 60~fd :distance
+~pause 60~seth :heading
+~pause 60~end
+~pause 60~
+~pause 60~to south :distance
+~pause 60~make "heading item 3 tf
+~pause 60~seth 180
+~pause 60~fd :distance
+~pause 60~seth :heading
+~pause 60~end
+~pause 60~rt 90
+
+~pause 60~fd 10
+~pause 60~north 3
+~pause 60~fd 7
+~pause 60~rt 90
+~pause 60~fd 11
+~pause 60~manhattan

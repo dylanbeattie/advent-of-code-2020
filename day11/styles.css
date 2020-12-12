@@ -1,3 +1,12 @@
 html {
     font-family: Arial;
+    background-color: #000;
+    text-align: center;
+}
+
+canvas {
+    background-color: #000;
+    width: 720px;
+    height: 680px;
+    margin: 10px auto;
 }

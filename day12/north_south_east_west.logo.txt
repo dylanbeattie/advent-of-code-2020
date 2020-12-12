@@ -1,0 +1,36 @@
+to manhattan
+make "x item 1 tf
+make "y item 2 tf
+if (:x < 0) [ make "x -1 * :x ]
+if (:y < 0) [ make "y -1 * :y ]
+make "dist :x + :y
+pr :dist
+end
+
+to north :distance
+make "heading item 3 tf
+seth 0
+fd :distance
+seth :heading
+end
+
+to east :distance
+make "heading item 3 tf
+seth 90
+fd :distance
+seth :heading
+end
+
+to west :distance
+make "heading item 3 tf
+seth 270
+fd :distance
+seth :heading
+end
+
+to south :distance
+make "heading item 3 tf
+seth 180
+fd :distance
+seth :heading
+end

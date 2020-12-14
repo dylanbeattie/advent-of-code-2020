@@ -25,21 +25,16 @@ namespace Day14 {
 		}
 
 		public static IEnumerable<long> FuzzMask(char[] mask, long address) {
-			var suffixes = mask[^1] switch {
-				'X' => new List<long> {0, 1},
-				'0' => new List<long> {address & 1},
-				_ => new List<long> {1L}
+			var tails = mask[^1] switch {
+				'X' => new[] {0L, 1},
+				'0' => new[] {address & 1},
+				_ => new[] {1L}
 			};
-
-			foreach (var suffix in suffixes) {
-				if (mask.Length == 1) {
-					yield return suffix;
-				} else {
-					foreach (var prefix in FuzzMask(mask[..^1], address >> 1)) {
-						yield return prefix << 1 | suffix;
-					}
-				}
-			}
+			return mask.Length == 1 
+				? tails 
+				: tails
+					.SelectMany(tail => FuzzMask(mask[..^1], address >> 1)
+					.Select(head => head << 1 | tail));
 		}
 	}
 }

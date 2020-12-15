@@ -23,8 +23,24 @@
         <input type="button" id="submit" value="Go" />
     </form>
     <hr />
-    <div id="output"></div>
+    <div id="output">Ready.</div>
+    <hr />
+    <a href="advent-of-code-2020-day-15.js">View Source</a>
 </body>
-<script src="script.js"></script>
+<script src="advent-of-code-2020-day-15.js"></script>
+<script>
+    let submit = document.getElementById("submit");
+    submit.addEventListener("click", function (event) {
+        document.getElementById('output').innerHTML = "Running...";
+        window.setTimeout(function () {
+            let input = document.getElementById("input").value.split(",").map(v => parseInt(v));
+            let limit = parseInt(document.getElementById("limit").value);
+            var commenced = new Date().valueOf();
+            let result = solve(input, limit);
+            let output = `Solution: ${result}<br />Elapsed time: ${new Date().valueOf() - commenced}ms`;
+            document.getElementById('output').innerHTML = output;
+        }, 100);
+        return (false);
+    });</script>
 
 </html>

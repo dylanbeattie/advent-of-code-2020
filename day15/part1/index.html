@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Advent of Code Day 15 Part 1</title>
+    <style>
+        html,
+        input {
+            font-family: Consolas, courier, monospaced;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        Starting Numbers:
+        <input type="text" name="input" id="input" value="1, 12, 0, 20, 8, 16" placeholder="1,2,3,4,5" /><br />
+        <br />
+        Limit: <input type="text" name="limit" id="limit" value="2020" placeholder="2020" />
+        <a href="#" onclick="document.getElementById('limit').value=2020;">2020</a>
+        <a href="#" onclick="document.getElementById('limit').value=30000000;">30000000</a><br />
+        <br />
+        <input type="button" id="submit" value="Go" />
+    </form>
+    <hr />
+    <div id="output"></div>
+</body>
+<script src="script.js"></script>
+
+</html>

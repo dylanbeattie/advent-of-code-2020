@@ -1,7 +1,10 @@
+using System.IO;
 using Day16Code;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using Shouldly;
+using Program = Day16Code.Program;
 
 namespace Day16Test {
 	public class Tests {
@@ -41,7 +44,32 @@ namespace Day16Test {
 		public void TestRuleNameParser(string ruleString, string name) {
 			var rule = Rule.Parse(ruleString);
 			rule.Name.ShouldBe(name);
+		}
 
+		[Test]
+		public void TestPart1OnRealInput() {
+			var input = File.ReadAllText("input.txt");
+			var solution = Program.SolveAdventOfCodePart1(input);
+			solution.ShouldBe(29019);
+		}
+
+		[Test]
+		public void TestPart1OnExampleInput() {
+			var input = @"class: 1-3 or 5-7
+row: 6-11 or 33-44
+seat: 13-40 or 45-50
+
+your ticket:
+7,1,14
+
+nearby tickets:
+7,3,47
+40,4,50
+55,2,20
+38,6,12";
+
+			var solution = Program.SolveAdventOfCodePart1(input);
+			solution.ShouldBe(71);
 		}
 	}
 }

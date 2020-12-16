@@ -6,10 +6,15 @@ using System.Net.NetworkInformation;
 using System.Runtime.CompilerServices;
 
 namespace Day16Code {
-	class Program {
+	public class Program {
 
 		static void Main(string[] args) {
 			var input = File.ReadAllText("input.txt");
+			var solution = SolveAdventOfCodePart1(input);
+			Console.WriteLine(solution);
+		}
+
+		public static int SolveAdventOfCodePart1(string input) {
 			var chunks = input.Replace("\r", "").Split("\n\n");
 			var rulesInput = chunks[0];
 			var myTicketInput = chunks[1];
@@ -22,7 +27,7 @@ namespace Day16Code {
 				sum += engine.FindInvalidValues(ticket).Sum();
 			}
 
-			Console.WriteLine(sum);
+			return sum;
 		}
 
 		private const string input = @"class: 1-3 or 5-7

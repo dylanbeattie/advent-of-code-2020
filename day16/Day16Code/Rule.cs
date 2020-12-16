@@ -5,10 +5,12 @@ namespace Day16Code {
 	public class Rule {
 		public string Name { get; set; }
 		public IEnumerable<Check> Checks { get; set; }
+		public string Text { get; set; }
 
 		public static Rule Parse(string rule) {
 			var tokens = rule.Split(": ");
 			return new Rule {
+				Text = rule,
 				Name = tokens[0],
 				Checks = tokens[1].Split(" or ").Select(Check.Parse)
 			};

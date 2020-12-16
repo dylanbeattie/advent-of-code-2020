@@ -9,10 +9,15 @@ namespace Day16Code {
 			this.rules = rules.Split("\n").Select(Rule.Parse);
 		}
 
-		private bool Validate(int value) => this.rules.Any(r => r.IsValid(value));
+		private bool Invalid(int value) => this.rules.All(r => ! r.IsValid(value));
 
-		public IEnumerable<int> FindInvalidValues(IEnumerable<int> ticket) {
-			return ticket.Where(value => !Validate(value));
-		}
+		public IList<int> FindInvalidValues(IList<int> ticket) => ticket.Where(Invalid).ToList();
+
+		public bool IsValid(IList<int> ticket) => ! ticket.Any(Invalid);
+
+		public IList<IList<Rule>> ListRulesForTicket(IList<int> ticket) => ticket.Select(ListRulesSatisfiedBy).ToList();
+
+		public IList<Rule> ListRulesSatisfiedBy(int input) => rules.Where(rule => rule.IsValid(input)).ToList();
+
 	}
 }

@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 namespace Day16Code {
 	public class Program {
 		private static Engine engine;
-		private static List<List<int>> nearbyTickets;
+		private static List<int[]> nearbyTickets;
 		private static long[] myTicket;
 
 		static void Main(string[] args) {
@@ -20,17 +20,19 @@ namespace Day16Code {
 
 		public static long SolveAdventOfCodePart2(string input) {
 			Parse(input);
-			var validTickets = nearbyTickets.Where(engine.IsValid).ToList();
-			var matrix = validTickets
-				.Select(ticket => engine.ListRulesForTicket(ticket)
-					.Select(list => list.Select(rule => rule.Name).ToList()).ToList()).ToList();
-			Dictionary<int, List<string>> fieldRules = new Dictionary<int, List<string>>();
-			foreach (var list in matrix) {
-				for (var fieldIndex = 0; fieldIndex < list.Count; fieldIndex++) {
+			var ticketRules = nearbyTickets.Where(engine.IsValid).Select(ticket => engine.ListRulesForTicket(ticket)).ToList();
+
+			var fieldRules = new Dictionary<int, List<string>>();
+
+			ticketRules.Select((rules, index) => { 
+
+			})
+			foreach (var list in ticketRules) {
+				for (var fieldIndex = 0; fieldIndex < list.Length; fieldIndex++) {
 					if (fieldRules.ContainsKey(fieldIndex)) {
 						fieldRules[fieldIndex] = fieldRules[fieldIndex].Intersect(list[fieldIndex]).ToList();
 					} else {
-						fieldRules.Add(fieldIndex, list[fieldIndex]);
+						fieldRules.Add(fieldIndex, list[fieldIndex].ToList());
 					}
 				}
 			}
@@ -53,13 +55,9 @@ namespace Day16Code {
 
 		private static void Parse(string input) {
 			var chunks = input.Replace("\r", "").Split("\n\n");
-			var rulesInput = chunks[0];
-			myTicket = chunks[1].Split("\n", StringSplitOptions.RemoveEmptyEntries)
-				.Skip(1).First().Split(",").Select(Int64.Parse).ToArray();
-			var nearbyTicketsInput = chunks[2];
-			nearbyTickets = nearbyTicketsInput.Split("\n", StringSplitOptions.RemoveEmptyEntries)
-				.Skip(1).Select(t => t.Split(",").Select(Int32.Parse).ToList()).ToList();
-			engine = new Engine(rulesInput);
+			engine = new Engine(chunks[0]);
+			myTicket = chunks[1].Split("\n", StringSplitOptions.RemoveEmptyEntries).Skip(1).First().Split(",").Select(Int64.Parse).ToArray();
+			nearbyTickets = chunks[2].Split("\n", StringSplitOptions.RemoveEmptyEntries).Skip(1).Select(t => t.Split(",").Select(Int32.Parse).ToArray()).ToList();
 		}
 
 
@@ -67,34 +65,6 @@ namespace Day16Code {
 			Parse(input);
 			return nearbyTickets.Sum(ticket => engine.FindInvalidValues(ticket).Sum());
 		}
-
-		private const string inputPart1 = @"class: 1-3 or 5-7
-row: 6-11 or 33-44
-seat: 13-40 or 45-50
-
-your ticket:
-7,1,14
-
-nearby tickets:
-7,3,47
-40,4,50
-55,2,20
-38,6,12";
-
-		private const string input = @"class: 0-1 or 4-19
-row: 0-5 or 8-19
-seat: 0-13 or 16-19
-
-your ticket:
-11,12,13
-
-nearby tickets:
-3,9,18
-15,1,5
-5,14,9";
-
 	}
-
-
 }
 

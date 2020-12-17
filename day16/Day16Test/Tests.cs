@@ -54,6 +54,13 @@ namespace Day16Test {
 		}
 
 		[Test]
+		public void TestParse2OnRealInput() {
+			var input = File.ReadAllText("input.txt");
+			var solution = Program.SolveAdventOfCodePart2(input);
+			solution.ShouldBe(517827547723L);
+		}
+
+		[Test]
 		public void TestPart1OnExampleInput() {
 			var input = @"class: 1-3 or 5-7
 row: 6-11 or 33-44

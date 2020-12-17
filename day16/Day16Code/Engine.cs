@@ -3,21 +3,15 @@ using System.Linq;
 
 namespace Day16Code {
 	public class Engine {
-		private IEnumerable<Rule> rules;
+		private readonly IEnumerable<Rule> rules;
 
 		public Engine(string rules) {
 			this.rules = rules.Split("\n").Select(Rule.Parse);
 		}
-
-		private bool Invalid(int value) => this.rules.All(r => ! r.IsValid(value));
-
-		public IList<int> FindInvalidValues(IList<int> ticket) => ticket.Where(Invalid).ToList();
-
-		public bool IsValid(IList<int> ticket) => ! ticket.Any(Invalid);
-
-		public IList<IList<Rule>> ListRulesForTicket(IList<int> ticket) => ticket.Select(ListRulesSatisfiedBy).ToList();
-
-		public IList<Rule> ListRulesSatisfiedBy(int input) => rules.Where(rule => rule.IsValid(input)).ToList();
-
+		private bool Invalid(int value) => this.rules.All(r => !r.IsValid(value));
+		public IEnumerable<int> FindInvalidValues(int[] ticket) => ticket.Where(Invalid);
+		public bool IsValid(int[] ticket) => !ticket.Any(Invalid);
+		public string[][] ListRulesForTicket(int[] ticket) => ticket.Select(ListRulesSatisfiedBy).ToArray();
+		public string[] ListRulesSatisfiedBy(int input) => rules.Where(rule => rule.IsValid(input)).Select(rule => rule.Name).ToArray();
 	}
 }

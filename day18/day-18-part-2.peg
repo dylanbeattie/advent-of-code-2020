@@ -1,0 +1,15 @@
+list = head:expr '\n' tail:list { return head + tail }
+	 / item:expr { return item }
+    
+expr = product
+
+product = lhs:sum _ '*' _ rhs:product { return lhs * rhs }
+		/ s:sum { return s }
+
+sum = lhs:atom _ '+' _ rhs:sum	{ return lhs + rhs }
+    / atom:atom { return atom }
+
+atom = '(' _ e:expr _ ')' {	return e; } 
+     / digits:$([0-9]+) { return parseInt(digits); }
+     
+_ = [ \t]*

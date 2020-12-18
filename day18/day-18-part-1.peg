@@ -1,0 +1,14 @@
+list = head:expr '\n' tail:list { return head + tail }
+	   / item:expr { return item }
+	
+expr = lhs:atom rhs:math+ { return rhs.reduce((ac, fn) => fn(ac), lhs) }
+     / number:atom { return number }
+
+math = _ '+' _ number:atom { return i => i + number }
+     / _ '*' _ number:atom { return i => i * number }
+
+atom = '(' _ e:expr _ ')' {	return e } 
+	   / digits:$([0-9]+) { return parseInt(digits); }
+     
+_ = [ \t]*
+

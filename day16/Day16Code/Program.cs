@@ -24,9 +24,6 @@ namespace Day16Code {
 
 			var fieldRules = new Dictionary<int, List<string>>();
 
-			ticketRules.Select((rules, index) => { 
-
-			})
 			foreach (var list in ticketRules) {
 				for (var fieldIndex = 0; fieldIndex < list.Length; fieldIndex++) {
 					if (fieldRules.ContainsKey(fieldIndex)) {

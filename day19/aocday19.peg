@@ -1,0 +1,19 @@
+grammar = r:rule EOL g:grammar { return r + "\n" + g }
+	    / r:rule { return r }
+     
+rule = id:id ':' _ m:match  { return id + " = " + m }
+
+match = p:or { return p }
+     / a:atom { return a }
+    
+or = head:list _ "|" _ tail:or { return head + " / " + tail }
+	/ item:list { return item }
+    
+list = head:id _ tail:list { return head + " " + tail }
+	/ id:id { return id }
+        
+atom = char:$('"' [^"] '"') { return char.replace(/"/g, "'") }
+
+id = number:$([0-9]+) { return "rule" + number }
+EOL = '\r'? '\n'
+_ = [ \t]+

@@ -6,13 +6,19 @@ async function solve() {
         let grammar1 = await response.text();
         var parser1 = peg.generate(grammar1);
 
-        let response2 = await fetch("input.txt");
+        let response2 = await fetch("example_part_2.txt");
         if (response2.ok) {
             let input = await response2.text();
-            console.log(input);
             let chunks = input.split(/\r?\n\r?\n/);
-            let input1 = chunks[0].split(/\n/g).sort().join('\n');
+            let input1 = chunks[0];
+            input1 = input1.replace(/^8: 42$/m, "8: 42 | 42 8");
+            input1 = input1.replace(/^11: 42 31$/m, "11: 42 31 | 42 11 31");
+            input1 = input1.split(/\n/g).sort().join('\n') + "\n";
+            console.log("==================================");
+            console.log(input1);
+            console.log("==================================");
             let grammar2 = parser1.parse(input1);
+
             document.write(`<pre>${grammar2}</pre>`);
 
             let parser2 = peg.generate(grammar2);
@@ -29,6 +35,7 @@ async function solve() {
                     console.log(error);
                 }
             });
+            document.write("<h1>" + count + "</h1>");
             console.log(count);
         }
     } else {

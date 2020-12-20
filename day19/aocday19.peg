@@ -1,5 +1,5 @@
 grammar = r:rule EOL g:grammar { return r + "\n" + g }
-	    / r:rule { return r }
+	    / r:rule EOL* { return r }
      
 rule = id:id ':' _ m:match  { return id + " = " + m }
 

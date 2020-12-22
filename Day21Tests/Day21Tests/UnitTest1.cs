@@ -88,16 +88,14 @@ namespace Day21Tests {
 
 	public class Analyzer {
 		public Dictionary<string,string> ListAllergens(IEnumerable<Food> foods) {
-			var candidates = new Dictionary<string, List<List<string>>>();
-			foreach (var food in foods) {
-				foreach (var allergen in food.Allergens) {
-					if (!candidates.ContainsKey(allergen)) candidates.Add(allergen, new List<List<string>>());
-					candidates[allergen].Add(food.Ingredients);
-				}
-			}
+			var candidates =
+				foods.SelectMany(f => f.Allergens).Distinct()
+				.ToDictionary(allergen => allergen,
+					allergen => foods.Where(f => f.Allergens.Contains(allergen))
+						.Select(food => food.Ingredients));
 
-			var shortlist = candidates.Keys.ToDictionary(alg => alg,
-				alg => candidates[alg].Aggregate((l1, l2) => l1.Intersect(l2).ToList()));
+			var shortlist = candidates.Keys.ToDictionary(alg => alg, alg => candidates[alg].Aggregate((l1, l2) => l1.Intersect(l2).ToList()));
+
 			var results = new Dictionary<string, string>();
 
 			while (shortlist.Any()) {

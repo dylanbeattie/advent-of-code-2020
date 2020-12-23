@@ -23,15 +23,15 @@ class ListNode {
         return head;
     }
 
-    // find(value) {
-    //     let node = this;
-    //     while(true) {
-    //         if (node.value == value) return(node);
-    //         if (node.next == null) return(null);
-    //         if (node.next == this) return(null);
-    //         node = node.next;
-    //     }
-    // }
+    find(value) {
+        let node = this;
+        while(true) {
+            if (node.value == value) return(node);
+            if (node.next == null) return(null);
+            if (node.next == this) return(null);
+            node = node.next;
+        }
+    }
 
     contains(node) {
         if (node == this) return(true);

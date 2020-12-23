@@ -7,7 +7,8 @@ function SolvePart1() {
 }
 
 function SolvePart2() {
-    [100, 1_000,10_000,100_000,1_000_000].forEach(size => {
+    // [100, 1_000,10_000,100_000,1_000_000]
+    [1_000_000].forEach(size => {
         var commenced = new Date().valueOf();
         let game = new Game('872495136', size);
         game.playMoves(10_000_000);
@@ -17,7 +18,7 @@ function SolvePart2() {
     });
 }
 
-SolvePart1();
+SolvePart2();
 
 // var head = ListNode.BuildLoop([1,2,3,4,5]);
 // console.log(head.dump());

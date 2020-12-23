@@ -8,11 +8,11 @@ class Game {
         this.maximumCup = cupola.length;
         this.currentCup = ListNode.BuildLoop(cupola);
         this.map = new Map();
-        let node = this.currentCup.next;
-        while(node != this.currentCup) {
+        let node = this.currentCup;
+        do {
             this.map.set(node.value, node);
             node = node.next;
-        }
+        } while(node != this.currentCup);
     }
 
     playMoves(count) {
@@ -25,7 +25,8 @@ class Game {
         let destCup = null;
         while(destCup == null) {
             if (destCupLabel-- <=0) destCupLabel = this.maximumCup;
-            destCup = this.currentCup.find(destCupLabel);
+            destCup = this.map.get(destCupLabel);
+            if (threeCups.contains(destCup)) destCup = null;
         }
         destCup.insert(threeCups);
         this.currentCup = this.currentCup.next;
@@ -34,13 +35,13 @@ class Game {
         return this.cups.join(", ");
     }
     get part2solution() {
-        let cup = this.currentCup.find(1).next;
+        let cup = this.map.get(1).next;
         return (cup.value * cup.next.value);
     }
 
     get part1solution() {
         let result = new Array();
-        let cup = this.currentCup.find(1).next;
+        let cup = this.map.get(1).next;
         while(cup.value != 1) {
             result.push(cup.value);
             cup = cup.next;

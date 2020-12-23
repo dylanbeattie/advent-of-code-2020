@@ -1,5 +1,5 @@
 const { expect, test } = require("@jest/globals");
-const Game = require('./game');
+const { Game, ListNode } = require('./game');
 
 test('it works', () => {
     expect(1).toBe(1);
@@ -55,5 +55,5 @@ test('game plays N moves', () => {
 
 test('game plays N moves', () => {
     let game = new Game('389125467');
-    expect(game.solution).toBe('25467389');
+    expect(game.part1solution).toBe('25467389');
 });

@@ -1,0 +1,23 @@
+{
+  "mainDirectory": "D:\\Projects\\github\\advent-of-code-2020\\day23",
+  "pathSeparator": "\\",
+  "nodeVersions": {
+    "node": "12.16.2",
+    "v8": "7.8.279.23-node.34",
+    "uv": "1.34.2",
+    "zlib": "1.2.11",
+    "brotli": "1.0.7",
+    "ares": "1.15.0",
+    "modules": "72",
+    "nghttp2": "1.40.0",
+    "napi": "5",
+    "llhttp": "2.0.4",
+    "http_parser": "2.9.3",
+    "openssl": "1.1.1e",
+    "cldr": "36.0",
+    "icu": "65.1",
+    "tz": "2019c",
+    "unicode": "12.1"
+  },
+  "toolVersion": "8.0.1"
+}

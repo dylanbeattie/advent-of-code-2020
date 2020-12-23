@@ -1,40 +1,56 @@
-const { MODULESPECIFIER_TYPES } = require("@babel/types");
+const { ListNode } = require("./ListNode");
 
 class Game {
-
     constructor(input, limit) {
         let cupola = new Array(limit || 0).fill(0).map((_, index) => index+1);
         let cups = input.split('').map(n => parseInt(n));
         cupola.splice(0,cups.length,...cups);
-        this.cups = cupola;
-        this.maximumCup = this.cups.length;
+        this.maximumCup = cupola.length;
+        this.currentCup = ListNode.BuildLoop(cupola);
+        this.map = new Map();
+        let node = this.currentCup.next;
+        while(node != this.currentCup) {
+            this.map.set(node.value, node);
+            node = node.next;
+        }
     }
 
-    get currentCup() {
-        return this.cups[0];
-    }
     playMoves(count) {
         for(var i = 0; i < count; i++) this.playMove();
     }
 
     playMove() {
-        let indexOfCurrentCup = this.cups.indexOf(this.currentCup);
-        let threeCups = this.cups.splice(indexOfCurrentCup+1, 3);
-        let destinationCup = this.currentCup - 1;
-        while(this.cups.indexOf(destinationCup) < 0) {
-            destinationCup--;
-            if (destinationCup < 0) destinationCup = this.maximumCup;
+        let threeCups = this.currentCup.splice(3);
+        let destCupLabel = this.currentCup.value;
+        let destCup = null;
+        while(destCup == null) {
+            destCupLabel--;
+            if (destCupLabel <=0) destCupLabel = this.maximumCup;
+            destCup = this.map.get(destCupLabel);
+            if (threeCups.contains(destCup)) {
+                console.log("NOPE");
+                destCup = null;
+            }
         }
-        let destinationCupIndex = this.cups.indexOf(destinationCup);
-        this.cups.splice(destinationCupIndex + 1, 0, ...threeCups);
-        this.cups.push(this.cups.shift());
+        destCup.insert(threeCups);
+        this.currentCup = this.currentCup.next;
     }
     toString() {
         return this.cups.join(", ");
     }
-    get solution() {
-        var cut = this.cups.indexOf(1);
-        return this.cups.slice(cut+1).concat(this.cups.slice(0,cut)).join('');
+    get part2solution() {
+        let cup = this.map.get(1).next;
+        return (cup.value * cup.next.value);
+    }
+
+    get part1solution() {
+        let result = new Array();
+        let cup = this.map.get(1).next;
+        while(cup.value != 1) {
+            result.push(cup.value);
+            cup = cup.next;
+        }
+        return result.join('');
     }
 }
-module.exports = Game;
+module.exports = { Game, ListNode };
